@@ -71,14 +71,16 @@ function run ()
     $shr = getShrAverage($httpdPidArr);
     $memorySize = getMemorySize();
     $maxClient = mathMaxClient($shr, $rss, $memorySize);
-
+    $usedMemory = $rss - $shr;
+    
     debugDump($rss, '$rss');
     debugDump($shr, '$shr');
     debugDump($memorySize, '$memorySize');
     debugDump($maxClient, '$maxClient');
     
     echo sprintf('--------------------------------') . PHP_EOL;
-    echo sprintf('memorySize / (rssAverage - shrAverage) = %dKB / (%dKB - %dKB) = %d', $memorySize, $rss, $shr, $maxClient) . PHP_EOL;
+    echo sprintf('rssAverage - shrAverage = (%dKB - %dKB) = %dKB', $rss, $shr, $usedMemory) . PHP_EOL;
+    echo sprintf('memorySize / (rssAverage - shrAverage) = %dKB / %dKB = %d', $memorySize, $usedMemory, $maxClient) . PHP_EOL;
     echo sprintf('MaxClient maximum value is %d.', $maxClient) . PHP_EOL;
     echo sprintf('--------------------------------') . PHP_EOL;
 }
